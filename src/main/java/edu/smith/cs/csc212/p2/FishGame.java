@@ -67,7 +67,7 @@ public class FishGame {
 			world.insertRockRandomly();
 		}
 		
-		Snail snail = world.insertSnailRandomly();
+		world.insertSnailRandomly();
 		
 		
 		
@@ -123,8 +123,7 @@ public class FishGame {
 				missing.remove(wo);
 				
 				// Remove from world.
-				// TODO(lab): add to found instead! (So we see objectsFollow work!)
-				//world.remove(wo);
+				
 				found.add((Fish) wo);
 				// Increase score when you find a fish!
 				score += 10;

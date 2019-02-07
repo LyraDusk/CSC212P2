@@ -233,13 +233,13 @@ public class World {
 	 * @param followers a set of objects to follow the leader.
 	 */
 	public static void objectsFollow(WorldObject target, List<? extends WorldObject> followers) {
-		// TODO(P2) Comment this method!
-		// What is recentPositions?
-		// What is followers?
-		// What is target?
-		// Why is past = putWhere[i+1]? Why not putWhere[i]?
+		
+		
+		//recentPositions: list of last few places the player has moved
 		List<IntPoint> putWhere = new ArrayList<>(target.recentPositions);
+		//Followers is list of fish following the player, target is the player
 		for (int i=0; i<followers.size(); i++) {
+			//Get the space where the player just was, put the follower there
 			IntPoint past = putWhere.get(i+1);
 			followers.get(i).setPosition(past.x, past.y);
 		}
