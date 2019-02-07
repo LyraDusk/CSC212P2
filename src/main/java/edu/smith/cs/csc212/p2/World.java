@@ -147,11 +147,14 @@ public class World {
 	public Rock insertRockRandomly() {
 		if(rand.nextDouble() < 0.3) {
 			FallingRock f = new FallingRock(this);
-			insertRandomly();
+			insertRandomly(f);
+			return f;
 		}
+		else {
 		Rock r = new Rock(this);
 		insertRandomly(r);
 		return r;
+		}
 	}
 	
 	/**
