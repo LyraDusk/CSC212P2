@@ -23,6 +23,10 @@ public class FishGame {
 	 * The home location.
 	 */
 	FishHome home;
+	/*
+	 * Number of rocks in the world
+	 */
+	public static final int NUM_ROCKS = 8;
 	/**
 	 * These are the missing fish!
 	 */
@@ -57,11 +61,15 @@ public class FishGame {
 		// Add a home!
 		home = world.insertFishHome();
 		
+		
+		
 		// TODO(lab) Generate some more rocks!
 		// TODO(lab) Make 5 into a constant, so it's easier to find & change.
-		for (int i=0; i<5; i++) {
+		for (int i=0; i< NUM_ROCKS; i++) {
 			world.insertRockRandomly();
 		}
+		
+		Snail snail = world.insertSnailRandomly();
 		
 		// TODO(lab) Make the snail!
 		
@@ -118,8 +126,8 @@ public class FishGame {
 				
 				// Remove from world.
 				// TODO(lab): add to found instead! (So we see objectsFollow work!)
-				world.remove(wo);
-				
+				//world.remove(wo);
+				found.add((Fish) wo);
 				// Increase score when you find a fish!
 				score += 10;
 			}
@@ -140,10 +148,18 @@ public class FishGame {
 		Random rand = ThreadLocalRandom.current();
 		for (Fish lost : missing) {
 			// 30% of the time, lost fish move randomly.
+			if (!lost.scared) {
 			if (rand.nextDouble() < 0.3) {
-				// TODO(lab): What goes here?
+				lost.moveRandomly();
 			}
 		}
+			if(lost.scared) {
+				if(rand.nextDouble() < 0.8) {
+					lost.moveRandomly();
+				}
+			} 
+		}
+		
 	}
 
 	/**
