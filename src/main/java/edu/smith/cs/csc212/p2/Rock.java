@@ -3,7 +3,7 @@ package edu.smith.cs.csc212.p2;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
-import java.util.Random;
+
 
 /**
  * It would be awful nice to have multi-colored rocks at random.
