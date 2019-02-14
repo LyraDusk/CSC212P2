@@ -37,6 +37,10 @@ public class FishGame {
 	 */
 	List<Fish> found;
 	
+	
+	List<Fish> safe;
+	
+	List<Fish> bored;
 	/**
 	 * Number of steps!
 	 */
@@ -57,6 +61,8 @@ public class FishGame {
 		
 		missing = new ArrayList<Fish>();
 		found = new ArrayList<Fish>();
+		safe = new ArrayList<Fish>();
+		bored = new ArrayList<Fish>();
 		
 		// Add a home!
 		home = world.insertFishHome();
@@ -99,8 +105,11 @@ public class FishGame {
 	 * @return true if the player has won (or maybe lost?).
 	 */
 	public boolean gameOver() {
-		// TODO(P2) We want to bring the fish home before we win!
-		return missing.isEmpty();
+		if(missing.isEmpty() && found.isEmpty()) {	
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -126,9 +135,52 @@ public class FishGame {
 				
 				found.add((Fish) wo);
 				// Increase score when you find a fish!
-				score += 10;
+				score += ((Fish) wo).getPoints();
 			}
 		}
+		for(WorldObject wo : found) {
+			((Fish)wo).incBored();
+			if(((Fish)wo).getBored() > 20) {
+				bored.add((Fish) wo);
+				((Fish)wo).resetBored();
+			}
+		}
+		
+		
+		List<WorldObject> atHome = this.home.findSameCell();
+		atHome.remove(this.home);
+		for (WorldObject o: atHome) {
+			if(missing.contains(o)) {
+				this.safe.add((Fish)o);
+			}
+			
+			if(o.isPlayer()) {
+				for(WorldObject fish: found) {
+					this.safe.add((Fish)fish);
+				}
+			}
+			
+			
+		}
+		for(WorldObject x: this.safe) {
+			if(missing.contains(x)) {
+				missing.remove(x);
+			}
+			if(found.contains(x)) {
+				found.remove(x);
+			}
+			if(world.viewItems().contains(x)) {
+				score += ((Fish) x).getPoints();
+				world.remove(x);
+			}
+			
+			
+		}
+		for(Fish x: this.bored) {
+			found.remove(x);
+			missing.add(x);
+		} 
+		bored.removeAll(bored);
 		
 		// Make sure missing fish *do* something.
 		wanderMissingFish();
@@ -165,10 +217,15 @@ public class FishGame {
 	 * @param y - the y-tile.
 	 */
 	public void click(int x, int y) {
-		// TODO(P2) use this print to debug your World.canSwim changes!
+		
 		System.out.println("Clicked on: "+x+","+y+ " world.canSwim(player,...)="+world.canSwim(player, x, y));
 		List<WorldObject> atPoint = world.find(x, y);
-		// TODO(P2) allow the user to click and remove rocks.
+		for(WorldObject w: atPoint) {
+			if(w instanceof Rock) {
+				world.remove(w);
+			}
+		}
+		
 
 	}
 	

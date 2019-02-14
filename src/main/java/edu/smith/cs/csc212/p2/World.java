@@ -204,12 +204,23 @@ public class World {
 		List<WorldObject> inSpot = this.find(x, y);
 		
 		for (WorldObject it : inSpot) {
-			// TODO(P2): Don't let us move over rocks as a Fish.
+			
 			// The other fish shouldn't step "on" the player, the player should step on the other fish.
 			if (it instanceof Snail) {
 				// This if-statement doesn't let anyone step on the Snail.
 				// The Snail(s) are not gonna take it.
 				return false;
+			}
+			if(it instanceof Rock) {
+				return false;
+			}
+			if(it instanceof Fish) {
+				if(isPlayer) {
+					return true;
+				} else {
+					return false;
+				}
+				
 			}
 		}
 		

@@ -29,6 +29,8 @@ public class Fish extends WorldObject {
 	 * This is an index into the {@link #COLORS} array.
 	 */
 	int color;
+	
+	int bored;
 	/**
 	 * Whether or not this is the player;
 	 */
@@ -52,6 +54,8 @@ public class Fish extends WorldObject {
 		super(world);
 		this.color = color;
 		this.scared = rand.nextBoolean();
+		this.bored = 0;
+	
 	}
 	
 	/**
@@ -60,6 +64,22 @@ public class Fish extends WorldObject {
 	 */
 	public Color getColor() {
 		return COLORS[this.color];
+	}
+	
+	public void incBored() {
+		this.bored += 1;
+	}
+	
+	public int getBored() {
+		return this.bored;
+	}
+	
+	public void resetBored() {
+		this.bored = 0;
+	}
+	
+	public int getPoints() {
+		return this.color;
 	}
 	
 	/**
