@@ -20,10 +20,12 @@ public class Fish extends WorldObject {
 			Color.green,
 			Color.yellow,
 			Color.cyan,
-			Color.orange
+			Color.orange,
+			Color.DARK_GRAY,
+			Color.magenta
 			
 		
-			// TODO: (P2) Maybe make a special fish that is more points?
+		
 	};
 	/**
 	 * This is an index into the {@link #COLORS} array.
